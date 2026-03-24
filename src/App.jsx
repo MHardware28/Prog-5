@@ -1,61 +1,61 @@
-import { useState } from 'react'
-
-import CheerPopup    from './shared/CheerPopup'
-import AddTaskModal  from './shared/AddTaskModal'
-
-import Login          from './screens/Login'
-import Dashboard      from './screens/Dashboard'
-import Messages       from './screens/Messages'
-import Tasks          from './screens/Tasks'
-import Links          from './screens/Links'
+import { useState, useEffect } from 'react'
+import CheerPopup from './shared/CheerPopup'
+import Login from './screens/Login'
+import Dashboard from './screens/Dashboard'
+import Messages from './screens/Messages'
+import Tasks from './screens/Tasks'
+import Links from './screens/Links'
 import ForgotPassword from './screens/ForgotPassword'
-
-const SCREENS = [
-  { id: 'login',     label: '1 · Login' },
-  { id: 'dashboard', label: '2 · Dashboard' },
-  { id: 'messages',  label: '3 · Messages' },
-  { id: 'tasks',     label: '4 · Tasks' },
-  { id: 'links',     label: '5 · Fav Links' },
-  { id: 'forgot',    label: '6 · Forgot PW' },
-]
+import { auth } from "./firebase"
+import { onAuthStateChanged, signOut } from "firebase/auth"
 
 export default function App() {
-  const [screen, setScreen]       = useState('login')
+  const [screen, setScreen] = useState('login')
   const [showPopup, setShowPopup] = useState(false)
-  const [showModal, setShowModal] = useState(false)
+  const [user, setUser] = useState(null) // 'olivia' or 'emma'
+
+  // ✅ Persist login
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        if (firebaseUser.email === 'emma@test.com') setUser('emma')
+        if (firebaseUser.email === 'olivia@test.com') setUser('olivia')
+        setScreen('dashboard')
+      } else {
+        setUser(null)
+        setScreen('login')
+      }
+    })
+    return () => unsub()
+  }, [])
 
   const goTo = name => {
     setScreen(name)
     if (name === 'dashboard') setTimeout(() => setShowPopup(true), 600)
   }
 
+  const login = (who) => {
+    setUser(who)
+    goTo('dashboard')
+  }
+
+  const logout = async () => {
+    await signOut(auth)
+    setUser(null)
+    setScreen('login')
+    setShowPopup(false)
+  }
+
   return (
-    <>
-      {/* Prototype switcher bar — remove before final delivery */}
-      <div className="switcher">
-        <span className="switcher-label">📱 Screens:</span>
-        {SCREENS.map(s => (
-          <button key={s.id} className={`sw-btn${screen === s.id ? ' on' : ''}`} onClick={() => goTo(s.id)}>
-            {s.label}
-          </button>
-        ))}
-      </div>
+    <div className="app">
+      {showPopup && <CheerPopup show={showPopup} onClose={() => setShowPopup(false)} />}
 
-      <div className="stage">
-        <div className="phone">
-
-          {showPopup && <CheerPopup show={showPopup} onClose={() => setShowPopup(false)} />}
-          {showModal && <AddTaskModal show={showModal} onClose={() => setShowModal(false)} />}
-
-          {screen === 'login'     && <Login goTo={goTo} />}
-          {screen === 'dashboard' && <Dashboard goTo={goTo} onCheer={() => setShowPopup(true)} />}
-          {screen === 'messages'  && <Messages  goTo={goTo} />}
-          {screen === 'tasks'     && <Tasks     goTo={goTo} onAddTask={() => setShowModal(true)} />}
-          {screen === 'links'     && <Links     goTo={goTo} />}
-          {screen === 'forgot'    && <ForgotPassword goTo={goTo} />}
-
-        </div>
-      </div>
-    </>
+      {screen === 'login'     && <Login goTo={goTo} onLogin={login} />}
+      {screen === 'dashboard' && <Dashboard goTo={goTo} onCheer={() => setShowPopup(true)} user={user} onLogout={logout} />}
+      {screen === 'messages'  && <Messages goTo={goTo} user={user} onLogout={logout} />}
+      {screen === 'tasks'     && <Tasks goTo={goTo} user={user} onLogout={logout} />}
+      {screen === 'links'     && <Links goTo={goTo} user={user} onLogout={logout} />}
+      {screen === 'forgot'    && <ForgotPassword goTo={goTo} />}
+    </div>
   )
 }
