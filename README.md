@@ -118,11 +118,6 @@ Name    Role
 * Makayla Hardware   Frontend Developer 
 * Sara-Lee Brown     Backend Developer 
 
-## 📦 Resources Used
-* React
-* Vite
-* Firebase
-* OpenWeatherMap API
 
 
 
