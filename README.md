@@ -22,3 +22,6 @@ Vite Plugins
 @vitejs/plugin-react (uses Oxc)
 @vitejs/plugin-react-swc (uses SWC)
 Note: The React Compiler is currently disabled to maintain dev/build performance. For production environments, we recommend enabling TypeScript and type-aware lint rules.
+
+## Behavioral Model
+<img width="1280" height="993" alt="Blank diagram" src="https://github.com/user-attachments/assets/96bc54c2-0eae-460f-9d51-300ef1d16d71" />
