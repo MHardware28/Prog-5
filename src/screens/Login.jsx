@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { auth } from "../firebase"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth, googleProvider } from "../firebase"
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 
 export default function Login({ goTo, onLogin }) {
   const [email, setEmail] = useState('')
@@ -17,6 +17,17 @@ export default function Login({ goTo, onLogin }) {
 
     } catch (err) {
       setError('Login failed: ' + err.message)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider)
+      const userEmail = res.user.email
+      if (userEmail === 'emma@test.com') onLogin('emma')
+      else if (userEmail === 'olivia@test.com') onLogin('olivia')
+    } catch (err) {
+      setError('Google login failed: ' + err.message)
     }
   }
 
@@ -53,6 +64,7 @@ export default function Login({ goTo, onLogin }) {
         {error && <div style={{ color: '#FF7675', fontSize: '.82rem', fontWeight: 700, marginBottom: 12, marginTop: -8 }}>{error}</div>}
 
         <button className="login-btn" onClick={handleLogin}>Sign In 🌈</button>
+        <button className="login-btn" onClick={handleGoogleLogin} style={{ backgroundColor: '#4285F4', marginTop: 8 }}>Sign In with Google 🔵</button>
         <span className="forgot-link" onClick={() => goTo('forgot')}>Forgot password?</span>
       </div>
 
@@ -60,4 +72,5 @@ export default function Login({ goTo, onLogin }) {
     </div>
   )
 }
+ 
  
