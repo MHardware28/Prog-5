@@ -1,12 +1,12 @@
-# 💙 Life Support
+# Life Support
 
 A free, colourful, and easy-to-use app designed to help elderly users and their families stay connected, organised, and informed.
 
-## 📖 Overview
+## Overview
 
 Life Support was built with love for users like Grandma Olivia.
 
-## 🎯 Project Goals
+## Project Goals
 
 * **User Authentication:** Secure login.
 * **Messaging:** Real-time chat.
@@ -16,7 +16,7 @@ Life Support was built with love for users like Grandma Olivia.
 * **Weather Widget:** Show daily weather for at least two locations (Sarasota, FL & Thousand Oaks, CA).
 * **Quick Links:** Add and access frequently visited websites (e.g., NYT, WWD).
 * **Colourful, Accessible UI:** Vibrant, colour-coded interface easy to navigate for seniors.
-## 🛠 Tech Stack & Setup
+## Tech Stack & Setup
 This project was bootstrapped using React + Vite.
 Vite Plugins
 @vitejs/plugin-react (uses Oxc)
