@@ -25,10 +25,104 @@ Features to enhance user experience and stand out from competing projects:
 **Voice-Friendly Design:** Large buttons, readable fonts, and high-contrast colours
 **Multi-location Weather:** Expandable to more than two locations
 **Profile Customisation:**  Avatar, display name, colour theme preferences
-  
+
+## 🛠️ Tech Stack
+| Layer | Technology |
+|-------|-----------|
+| Frontend framework | React + Vite |
+| Styling | CSS (App.css / index.css) |
+| Backend & auth | Firebase (Authentication + Firestore) |
+| Hosting | Vercel / Netlify |
+| Weather | OpenWeatherMap API |
+| Real-time messaging | Firebase Firestore (real-time listeners) |
+
+
+## 📁 Project Structure
+```
+profswipe/
+├── public/
+│   ├── favicon.svg
+│   └── icons.svg
+├── src/
+│   ├── screen/
+│   │   ├── Dashboard.jsx
+│   │   ├── ForgotPassword.jsx
+│   │   ├── Links.jsx
+│   │   ├── Login.jsx
+│   │   ├── Messages.jsx
+│   │   └── Tasks.jsx
+│   ├── shared/
+│   │   ├── AddTaskModal.jsx
+│   │   ├── BottomNav.jsx
+│   │   ├── CheerPopup.jsx
+│   │   └── Topbar.jsx
+│   ├── App.css
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── firebase.js
+│   └── index.css
+├── .env
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── vite.config.js
+└── README.md
+```
+## UML 
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     CLIENT — React + Vite                        │
+│                                                                   │
+│  ┌─────────────┐  ┌─────────────┐  ┌──────────┐  ┌──────────┐  │
+│  │    Login    │  │  Dashboard  │  │ Messages │  │  Tasks   │  │
+│  │ ForgotPass  │  │  (Weather)  │  │  (Chat)  │  │  Links   │  │
+│  └──────┬──────┘  └──────┬──────┘  └────┬─────┘  └────┬─────┘  │
+│         │                │               │              │         │
+│         └────────────────┴───────────────┴──────────────┘         │
+│                                    │                               │
+│              ┌─────────────────────▼─────────────────────┐        │
+│              │            Shared Components               │        │
+│              │   BottomNav · Topbar · CheerPopup          │        │
+│              │   AddTaskModal                             │        │
+│              └─────────────────────┬─────────────────────┘        │
+└────────────────────────────────────┼────────────────────────────── ┘
+                                     │
+                     ┌───────────────▼───────────────┐
+                     │          firebase.js           │
+                     │    Config & init layer         │
+                     └───────────────┬───────────────┘
+                                     │
+          ┌──────────────────────────┼──────────────────────────┐
+          │                          │                           │
+┌─────────▼────────┐      ┌──────────▼─────────┐     ┌─────────▼────────┐
+│  Firebase Auth   │      │    Firestore DB     │     │ OpenWeather API  │
+│                  │      │                     │     │                  │
+│  · Login         │      │  · Messages         │     │  · Sarasota, FL  │
+│  · Forgot pass   │      │  · Tasks / lists    │     │  · Thousand      │
+│  · Session mgmt  │      │  · User links       │     │    Oaks, CA      │
+└──────────────────┘      │  · User profiles    │     └──────────────────┘
+                           └─────────────────────┘
+```
 
 ## Live Demo 
 https://prog-5.vercel.app/ 
 
-## Behavioral Model
+## Behavioural Model
 <img width="1280" height="993" alt="Blank diagram" src="https://github.com/user-attachments/assets/96bc54c2-0eae-460f-9d51-300ef1d16d71" />
+
+## 👥 Team
+Name    Role
+* Rich-Ann Campbell  Project Manager 
+* Makayla Hardware   Frontend Developer 
+* Sara-Lee Brown     Backend Developer 
+
+## 📦 Resources Used
+* React
+* Vite
+* Firebase
+* OpenWeatherMap API
+
+
+
