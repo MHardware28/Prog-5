@@ -4,7 +4,7 @@ A free, colourful, and easy-to-use app designed to help elderly users and their 
 ## 📖 Overview
 Life Support was built with love for users like Grandma Olivia — seniors who may not be tech-savvy but deserve a simple, vibrant, and reliable tool to manage their daily lives while staying close to family. The app allows an elderly user and their family members to communicate, share to-do lists, track medications and appointments, check the weather, and more — all in one place.
 
-## 🎯 Project Goals
+## 🎯 App Features 
 **✅ MVP — Minimum Viable Product**
 The core features that must be implemented:
 * **User Authentication:** Secure login.
@@ -18,13 +18,13 @@ The core features that must be implemented:
 
   **🚀 MMP — Minimum Marketable Product**
 Features to enhance user experience and stand out from competing projects:
-**Pop-up Motivational Messages:**  Cheerful, randomised messages to brighten Grandma's day
-**Medication & Appointment Reminders:** Push or in-app notifications with customizable schedules
-**Community Session Reminders:** Alerts for weekly group sessions or social events
-**Offline Support:**  Basic functionality even without internet
-**Voice-Friendly Design:** Large buttons, readable fonts, and high-contrast colours
-**Multi-location Weather:** Expandable to more than two locations
-**Profile Customisation:**  Avatar, display name, colour theme preferences
+* **Pop-up Motivational Messages:**  Cheerful, randomised messages to brighten Grandma's day
+* **Medication & Appointment Reminders:** Push or in-app notifications with customizable schedules
+* **Community Session Reminders:** Alerts for weekly group sessions or social events
+* **Offline Support:**  Basic functionality even without internet
+* **Voice-Friendly Design:** Large buttons, readable fonts, and high-contrast colours
+* **Multi-location Weather:** Expandable to more than two locations
+* **Profile Customisation:**  Avatar, display name, colour theme preferences
 
 ## 🛠️ Tech Stack
 | Layer | Technology |
