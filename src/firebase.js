@@ -1,17 +1,19 @@
-import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
-import { getAuth } from "firebase/auth"
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCqDcJRhmvFbD9ACMbhTMHxB005mPj4yhQ",
-  authDomain: "life-support-b1449.firebaseapp.com",
-  projectId: "life-support-b1449",
-  storageBucket: "life-support-b1449.firebasestorage.app",
-  messagingSenderId: "768923759080",
-  appId: "1:768923759080:web:b3d83a2054cd00abdcb45d"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 }
 
 const app = initializeApp(firebaseConfig)
-
 export const db = getFirestore(app)
 export const auth = getAuth(app)
+export const googleProvider = new GoogleAuthProvider()
+
+export default app
