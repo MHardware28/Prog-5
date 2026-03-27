@@ -16,7 +16,7 @@ The core features that must be implemented:
 * **Quick Links:** Add and access frequently visited websites (e.g., NYT, WWD).
 * **Colourful, Accessible UI:** Vibrant, colour-coded interface easy to navigate for seniors.
 
-  **🚀 MMP — Minimum Marketable Product**
+**🚀 MMP — Minimum Marketable Product**
 Features to enhance user experience and stand out from competing projects:
 * **Pop-up Motivational Messages:**  Cheerful, randomised messages to brighten Grandma's day
 * **Medication & Appointment Reminders:** Push or in-app notifications with customizable schedules
