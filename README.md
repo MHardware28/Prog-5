@@ -7,7 +7,7 @@ Life Support was built with love for users like Grandma Olivia — seniors who m
 ## 🎯 App Features 
 **✅ MVP — Minimum Viable Product**
 The core features that must be implemented:
-* **User Authentication:** Secure login.
+* **User Authentication:** Secure login: Emma logs in using emma@test.com with the password 'password'
 * **Messaging:** Real-time chat.
 * **To-Do / Task Management:** View, add, edit, and delete daily/weekly tasks and plans.
 * **Shared Plans:** View and share each other's to-do lists.
