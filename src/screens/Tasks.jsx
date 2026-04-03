@@ -3,8 +3,6 @@ import Topbar from '../shared/Topbar'
 import BottomNav from '../shared/BottomNav'
 import AddTaskModal from '../shared/AddTaskModal'
 
-const today = new Date().toISOString().split('T')[0]
-
 const formatDate = (dateStr) => {
   const d = new Date(dateStr + 'T00:00:00')
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -16,19 +14,36 @@ const formatTime = (time) => {
   return `${hour % 12 || 12}:${m} ${hour < 12 ? 'AM' : 'PM'}`
 }
 
-const INIT_TASKS = [
-  { id: 1, text: 'Take morning medications 💊',        time: '08:00', date: today, color: '#FF6B9D', done: true },
-  { id: 2, text: 'Doctor appointment - Dr. Reeves 🏥', time: '10:30', date: today, color: '#FFB347', done: false },
-  { id: 3, text: 'Weekly community group session 👥',  time: '14:00', date: today, color: '#A29BFE', done: true },
-  { id: 4, text: 'Evening walk in the garden 🌿',      time: '17:30', date: today, color: '#55EFC4', done: false },
-  { id: 5, text: 'Take evening medications 💊',        time: '20:00', date: today, color: '#FF6B9D', done: false },
-]
+const getToday = () => new Date().toISOString().split('T')[0]
 
-const TABS = ['Today', 'This Week', "Emma's", 'Shared']
+const getThisWeekDates = () => {
+  const today = new Date()
+  const monday = new Date(today)
+  monday.setDate(today.getDate() - today.getDay() + 1) // Monday
+  const sunday = new Date(monday)
+  sunday.setDate(monday.getDate() + 6) // Sunday
+  return {
+    start: monday.toISOString().split('T')[0],
+    end: sunday.toISOString().split('T')[0]
+  }
+}
+
+const getNextWeekDates = () => {
+  const thisWeek = getThisWeekDates()
+  const nextMonday = new Date(thisWeek.end + 'T00:00:00')
+  nextMonday.setDate(nextMonday.getDate() + 1)
+  const nextSunday = new Date(nextMonday)
+  nextSunday.setDate(nextMonday.getDate() + 6)
+  return {
+    start: nextMonday.toISOString().split('T')[0],
+    end: nextSunday.toISOString().split('T')[0]
+  }
+}
+
+const TABS = ['Today', 'This Week', 'Next Week', 'All']
 const COLORS = ['#FF6B9D', '#FFB347', '#4ECDC4', '#A29BFE', '#55EFC4', '#FDCB6E']
 
-export default function Tasks({ goTo, user, onLogout }) {
-  const [tasks, setTasks]             = useState(INIT_TASKS)
+export default function Tasks({ goTo, user, onLogout, tasks, setTasks }) {
   const [tab, setTab]                 = useState('Today')
   const [editingTask, setEditingTask] = useState(null)
   const [showModal, setShowModal]     = useState(false)
@@ -42,12 +57,32 @@ export default function Tasks({ goTo, user, onLogout }) {
     setEditingTask(null)
   }
 
+  const getFilteredTasks = () => {
+    const today = getToday()
+    const thisWeek = getThisWeekDates()
+    const nextWeek = getNextWeekDates()
+
+    switch (tab) {
+      case 'Today':
+        return tasks.filter(t => t.date === today)
+      case 'This Week':
+        return tasks.filter(t => t.date >= thisWeek.start && t.date <= thisWeek.end)
+      case 'Next Week':
+        return tasks.filter(t => t.date >= nextWeek.start && t.date <= nextWeek.end)
+      case 'All':
+        return tasks
+      default:
+        return tasks
+    }
+  }
+
   const download = () => {
+    const filteredTasks = getFilteredTasks()
     const lines = [
-      'Life Support — My Task List',
+      `Life Support — ${tab} Tasks`,
       '============================',
       '',
-      ...tasks.map(t => `[${t.done ? '✓' : ' '}] ${t.text} | ${formatTime(t.time)} | ${formatDate(t.date)}`),
+      ...filteredTasks.map(t => `[${t.done ? '✓' : ' '}] ${t.text} | ${formatTime(t.time)} | ${formatDate(t.date)}`),
       '',
       `Downloaded on ${new Date().toLocaleDateString()}`,
     ]
@@ -55,9 +90,27 @@ export default function Tasks({ goTo, user, onLogout }) {
     const url  = URL.createObjectURL(blob)
     const a    = document.createElement('a')
     a.href     = url
-    a.download = 'my-tasks.txt'
+    a.download = `${tab.toLowerCase().replace(' ', '-')}-tasks.txt`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  const emailToEmma = () => {
+    const filteredTasks = getFilteredTasks()
+    const subject = `Life Support — ${tab} Tasks`
+    const body = [
+      `Hi Emma,`,
+      ``,
+      `Here are my ${tab.toLowerCase()} tasks:`,
+      ``,
+      ...filteredTasks.map(t => `[${t.done ? '✓' : ' '}] ${t.text} | ${formatTime(t.time)} | ${formatDate(t.date)}`),
+      ``,
+      `Sent from Life Support app`,
+      new Date().toLocaleDateString(),
+    ].join('\n')
+
+    const mailtoLink = `mailto:emma@test.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.open(mailtoLink)
   }
 
   return (
@@ -74,10 +127,10 @@ export default function Tasks({ goTo, user, onLogout }) {
 
         <div className="task-actions">
           <button className="action-btn" onClick={download}>📥 Download</button>
-          <button className="action-btn">📧 Email to Emma</button>
+          <button className="action-btn" onClick={emailToEmma}>📧 Email to Emma</button>
         </div>
 
-        {tasks.map(task => (
+        {getFilteredTasks().map(task => (
           <div key={task.id} className="task-card">
             <div className="tc-color" style={{ background: task.color }} />
             <div className="tc-body">

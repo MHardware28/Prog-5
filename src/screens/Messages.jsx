@@ -14,7 +14,7 @@ import {
 
 import { db } from "../firebase"
 
-export default function Messages({ goTo, user }) {
+export default function Messages({ goTo, user, onLogout }) {
   const [msgs, setMsgs] = useState([])
   const [input, setInput] = useState('')
   const [typingUser, setTypingUser] = useState(null)
@@ -92,10 +92,10 @@ export default function Messages({ goTo, user }) {
 
   return (
     <div className="screen">
-      <Topbar />
+      <Topbar user={user} onLogout={onLogout} />
 
       <div className="chat-header">
-        <div className="ch-av">🌻</div>
+        <div className="ch-av">{user === 'emma' ? '👵' : '🌻'}</div>
         <div className="ch-info">
           <div className="ch-name">
             {user === 'emma' ? 'Olivia 👵' : 'Emma 🌻'}
