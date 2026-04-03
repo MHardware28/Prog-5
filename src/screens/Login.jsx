@@ -56,8 +56,10 @@ export default function Login({ goTo, onLogin }) {
         <span className="forgot-link" onClick={() => goTo('forgot')}>Forgot password?</span>
       </div>
 
-      <div className="login-footer">🔒 Private & secure · No ads · No data sold</div>
+      <div className="login-footer">🔒 Private & secure *No ads *No data sold</div>
     </div>
   )
 }
+ 
+ 
  
